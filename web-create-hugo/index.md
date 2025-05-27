@@ -74,6 +74,25 @@ git push -u origin main
 
 正常情况下就github上就有了上传的文件，同时有个自动build的操作，我的Hugo生成的文件传到上面没有build成功，所以网站打开一直是404错误，通过询问ChatGPT最终得以解决，方式是在根目录添加一个.nojekyll文件，因为build过程中调用了jekyll，这看起来是个奇怪的现象。打开 https://henry99520.github.io 网站正常访问
 
+之后每次生成新的静态网页后需要更新到github时只需执行下面的语句
+
+```
+cd public/
+git pull origin main --rebase        # 👈 拉取远程更新避免 push 冲突
+git add .
+git commit -m "Update site content"
+git push origin main                 # 或 master，看你的默认分支
+```
+
+如果生成的public下的文件还没有初始化git仓库的话，可执行下面的命令
+
+```
+cd public/
+git init
+git remote add origin https://github.com/henry99520/henry99520.github.io.git
+git checkout -b main
+```
+
 5.接下来可以绑定自定义的域名，在Pages页面下有Custom domain选项，里面填上自定义的域名，我这里使用了二级域名，同时在cloudflare里面配置对应的DNS记录，具体要指定的IP地址可参考[Github Docs](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site#configuring-an-apex-domain)，其中的四个IP都需要填上
 
 ## 部署 Vercel

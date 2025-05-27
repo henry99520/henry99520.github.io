@@ -33,7 +33,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/example.org\/web-create-hugo\/"
-        },"genre": "posts","wordcount":  1048 ,
+        },"genre": "posts","wordcount":  1181 ,
         "url": "http:\/\/example.org\/web-create-hugo\/","datePublished": "2025-05-21T18:42:14+02:00","dateModified": "2025-05-21T18:42:14+02:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -125,7 +125,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Hugo创建博客及部署</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>qheng</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-05-21">2025-05-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1048 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-05-21">2025-05-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1181 字&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="">
                 <div class="details-summary toc-title">
@@ -201,7 +201,18 @@
 </span></span><span class="line"><span class="cl">git remote add origin https://github.com/henry99520/henry99520.github.io.git
 </span></span><span class="line"><span class="cl">git push -u origin main
 </span></span></code></pre></div><p>正常情况下就github上就有了上传的文件，同时有个自动build的操作，我的Hugo生成的文件传到上面没有build成功，所以网站打开一直是404错误，通过询问ChatGPT最终得以解决，方式是在根目录添加一个.nojekyll文件，因为build过程中调用了jekyll，这看起来是个奇怪的现象。打开 <a href="https://henry99520.github.io" target="_blank" rel="noopener noreffer ">https://henry99520.github.io</a> 网站正常访问</p>
-<p>5.接下来可以绑定自定义的域名，在Pages页面下有Custom domain选项，里面填上自定义的域名，我这里使用了二级域名，同时在cloudflare里面配置对应的DNS记录，具体要指定的IP地址可参考<a href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site#configuring-an-apex-domain" target="_blank" rel="noopener noreffer ">Github Docs</a>，其中的四个IP都需要填上</p>
+<p>之后每次生成新的静态网页后需要更新到github时只需执行下面的语句</p>
+<pre tabindex="0"><code>cd public/
+git pull origin main --rebase        # 👈 拉取远程更新避免 push 冲突
+git add .
+git commit -m &#34;Update site content&#34;
+git push origin main                 # 或 master，看你的默认分支
+</code></pre><p>如果生成的public下的文件还没有初始化git仓库的话，可执行下面的命令</p>
+<pre tabindex="0"><code>cd public/
+git init
+git remote add origin https://github.com/henry99520/henry99520.github.io.git
+git checkout -b main
+</code></pre><p>5.接下来可以绑定自定义的域名，在Pages页面下有Custom domain选项，里面填上自定义的域名，我这里使用了二级域名，同时在cloudflare里面配置对应的DNS记录，具体要指定的IP地址可参考<a href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site#configuring-an-apex-domain" target="_blank" rel="noopener noreffer ">Github Docs</a>，其中的四个IP都需要填上</p>
 <h2 id="部署-vercel">部署 Vercel</h2>
 <p>1.注册并且关联github账号，因为vercel需要从github上拉取代码部署</p>
 <p>2.选择需要部署的GitHub下的仓库</p>
